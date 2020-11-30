@@ -32,9 +32,6 @@ transition_data_current
 transition_data_previous <- readRDS("archived_data/staff_data_archived_2020_11_24t14_00.rds")
 transition_data_previous
 
-#list new names
-newnames <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
-newnames
 
 
 #### AGENCY TEAMS ##### --------------------------------------------------------
