@@ -25,16 +25,16 @@ source("02_scrape_nominees.R")
 #Your code here#
 
 #load current data about wh senior staff that we just scraped from the live biden website
-transition_data_current <- readRDS("processed_data/staff_data_scraped.rds")
-transition_data_current
+staff_data_current <- readRDS("processed_data/staff_data_scraped.rds")
+staff_data_current
 
 #load archived data
-transition_data_previous <- readRDS("archived_data/staff_data_archived_2020_11_24t14_00.rds")
-transition_data_previous
+staff_data_previous <- readRDS("archived_data/staff_data_archived_2020_11_24t14_00.rds")
+staff_data_previous
 
 #list new names
-newnames <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
-newnames
+newstaffnames <- anti_join(staff_data_current, staff_data_previous, by = "idstring")
+newstaffnames
 
 #### AGENCY TEAMS ##### --------------------------------------------------------
 
