@@ -70,7 +70,7 @@ agencycount_compare %>%
   filter(change > 0) %>%
   gt() %>%
   tab_header(
-    title = "Total Number of People Appointed in Each Agency + Change from Pervious Count"
+    title = "Total Number of People Appointed in Each Agency + Change from Previous Count"
   ) %>%
   cols_label(
     agency = "Agency",
@@ -114,7 +114,8 @@ agencycount_current %>%
   filter(current_count < 5) %>%
   gt() %>%
   tab_header(
-    title = "Smallest Agency Review Teams as of 12/2/20"
+    title = "Smallest Agency Review Teams as of 12/2/20",
+    subtitle = "*defined as those with less than five members"
   ) %>%
   cols_label(
     agency = "Agency",
@@ -138,7 +139,19 @@ Below write code to show the new names added to the senior staff lists since the
 
 ```{r, echo=FALSE}
 
-newstaffnames
+newstaffnames%>%
+  gt() %>%
+  tab_header(
+    title = "New Names Added to Senior Staff"
+  ) %>%
+  cols_label(
+    name = "Name",
+    title = "Title"
+    ) %>%
+  cols_hide(
+    columns = vars(
+      link, idstring)
+    )
 
  
 
@@ -158,23 +171,28 @@ nrow(staff_data_previous)
 
 
 #this code is supposed to return change # ? idk
-staffcount_current <- staff_data_current %>%
-  count(name, name = "current_staff_count")
 
-staffcount_current
+staff_data_current
+
+staffcount_current <- staff_data_current %>%
+  tally(n= "Number of People Currently Named to the WH Senior Staff")
+
+staffcount_current 
+
+
 
 staffcount_previous <- staff_data_previous %>%
-  count(name, name = "previous_staff_count")
+  tally(n = "Number of People Previously Named to WH Senior Staff")
 
 staffcount_previous
 
-staffcount_compare <- left_join(staffcount_current, staffcount_previous, by = "name")
-staffcount_compare
+staffcountcompare <- merge(staffcount_current, staffcount_previous, all=TRUE)
+staffcountcompare
 
-#something is weird in this code 
-staffcount_compare <- staffcount_compare %>%
-  mutate(
-    change = staffcount_current - staffcount_previous
+staffcountcompare %>%
+  gt() %>%
+  tab_header(
+    title = "Total Number of People Currently Named to Senior Staff vs. Previous Count"
   )
 
 ```
