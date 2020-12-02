@@ -98,7 +98,7 @@ Below write code to show the new names added to the senior staff lists since the
 
 ```{r, echo=FALSE}
 
-
+newstaffnames
 
  
 
@@ -112,8 +112,23 @@ Add code to show the total number of people currently named to the WH senior sta
 
 ```{r, echo=FALSE}
 
+nrow(staff_data_current)
+nrow(staff_data_previous)
 
+staffcount_current <- staff_data_current %>%
+  count(name, name = "current_staff_count")
+staffcount_current
 
+staffcount_previous <- staff_data_previous %>%
+  count(name, name = "previous_staff_count")
+staffcount_previous
 
+staffcount_compare <- left_join(staffcount_current, staffcount_previous, by = "name")
+staffcount_compare
+
+staffcount_compare <- staffcount_compare %>%
+  mutate(
+    change = staffcount_current - staffcount_previous
+  )
 
 ```
