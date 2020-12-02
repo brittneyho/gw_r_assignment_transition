@@ -67,7 +67,17 @@ Add data to show the total number of people appointed to each agency team, along
 ```{r, echo=FALSE}
 
 agencycount_compare %>%
-  filter(change > 0) 
+  filter(change > 0) %>%
+  gt() %>%
+  tab_header(
+    title = "Total Number of People Appointed in Each Agency + Change from Pervious Count"
+  ) %>%
+  cols_label(
+    agency = "Agency",
+    current_count = "Current Count",
+    previous_count = "Previous Count",
+    change =  "Change"
+    )
 
 
 
@@ -82,7 +92,14 @@ Show the top 10 **largest** agency review teams as of today:
 
 agencycount_current %>%
   arrange(desc(current_count)) %>%
-  filter(current_count > 22)
+  filter(current_count > 22) %>%
+  gt() %>%
+  tab_header(
+    title = "Top 10 Largest Agency Review Teams as of 12/2/20"
+  ) %>%
+  cols_label(
+    agency = "Agency",
+    current_count = "Current Count")
 
 
 
@@ -94,7 +111,14 @@ Show the top **smallest** agency review teams as of today - which we'll define h
 ```{r, echo=FALSE}
 
 agencycount_current %>%
-  filter(current_count < 5)
+  filter(current_count < 5) %>%
+  gt() %>%
+  tab_header(
+    title = "Smallest Agency Review Teams as of 12/2/20"
+  ) %>%
+  cols_label(
+    agency = "Agency",
+    current_count = "Current Count")
 
 
  
