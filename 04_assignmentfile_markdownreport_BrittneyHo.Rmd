@@ -170,7 +170,7 @@ nrow(staff_data_current)
 nrow(staff_data_previous)
 
 
-#this code is supposed to return change # ? idk
+#this code returns count of current
 
 staff_data_current
 
@@ -179,12 +179,14 @@ staffcount_current <- staff_data_current %>%
 
 staffcount_current 
 
-
+#this code returns  count  of previous 
 
 staffcount_previous <- staff_data_previous %>%
   tally(n = "Number of People Previously Named to WH Senior Staff")
 
 staffcount_previous
+
+#this combines the two tibbles into one dataframe and creates table
 
 staffcountcompare <- merge(staffcount_current, staffcount_previous, all=TRUE)
 staffcountcompare
