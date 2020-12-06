@@ -26,7 +26,7 @@ source("02_scrape_nominees.R")
 
 #load current data about wh senior staff that we just scraped from the live biden website
 staff_data_current <- readRDS("processed_data/staff_data_scraped.rds")
-staff_data_current
+staff_data_current 
 
 #load archived data
 staff_data_previous <- readRDS("archived_data/staff_data_archived_2020_11_24t14_00.rds")
