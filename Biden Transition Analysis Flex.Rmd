@@ -94,7 +94,7 @@ datatable(transition_data_current_filtered,
 
 Agency Review Team Growth from November to December
 ==================================
-Let's take a look at some the growth that each agency review team faced in the weeks following Biden's election. Examining data from November 24, 2020 to December 16, 2020, just shy of a month, we can see the percent change in each agency, perhaps reflective of areas of prioritized importance to the president-elect.
+Let's take a look at some the growth that each agency review team faced in the weeks following Biden's election. Examining data from November 24, 2020 to December 16, 2020, a week shy of a month, we can see the percent change in each agency, perhaps reflective of areas of prioritized importance to the president-elect.
 
 Row {data-width=1000}
 -----------------------------------------------------------------------
@@ -109,11 +109,25 @@ agencycount_comparefiltered <- agencycount_compare %>%
     "Count as of Dec. 16" = current_count,
     "Count as of Nov. 24" = previous_count,
     "Change" = change,
-    "Percent Change" = pct_change 
+    "PercentChange" = pct_change
   )
   
 
-datatable(agencycount_comparefiltered) 
+datatable(agencycount_comparefiltered,
+          filter = "top",
+          extensions = "Buttons",
+          options = list(searchHighlight = TRUE, bPaginate = FALSE, dom = 'Bfrtip', 
+          buttons = c('copy', 'csv', 'excel', 'print')
+                      )) %>% 
+      formatStyle(
+        'PercentChange',
+        background = styleColorBar(agencycount_comparefiltered$PercentChange, 'steelblue'),
+        backgroundSize = '100% 90%',
+        backgroundRepeat = 'no-repeat',
+        backgroundPosition = 'center'
+      ) %>%
+      formatPercentage("PercentChange")
+  
   
 
 ```
