@@ -56,14 +56,14 @@ datatable(staff_data_current_filtered,
 
 ```
 
-Agency Appointees
+Agency Review Team
 ==================================
-Here are the agency appointees that have been named to the Biden Administration. To sort, use the up/down arrows by the column names. To filter, click on the boxes at the top of the columns. 
+Here are the appointees to the Agency Review Teams that have been named to the Biden Administration. To sort, use the up/down arrows by the column names. To filter, click on the boxes at the top of the columns. 
 
 Row {data-width=1000}
 -----------------------------------------------------------------------
 
-### Agency Appointees (as of Dec. 16, 2020)
+### Agency Review Team (as of Dec. 16, 2020)
 
 ```{r}
 transition_data_current_filtered <- transition_data_current %>%
@@ -92,4 +92,28 @@ datatable(transition_data_current_filtered,
           )) 
 ```
 
+Agency Review Team Growth from November to December
+==================================
+Let's take a look at some the growth that each agency review team faced in the weeks following Biden's election. Examining data from November 24, 2020 to December 16, 2020, just shy of a month, we can see the percent change in each agency, perhaps reflective of areas of prioritized importance to the president-elect.
 
+Row {data-width=1000}
+-----------------------------------------------------------------------
+### Agency Review Team Growth from Nov. to Dec.
+
+```{r}
+
+agencycount_comparefiltered <- agencycount_compare %>%
+  mutate(pct_change = ((current_count - previous_count)/previous_count)) %>%
+  rename(
+    Agency = agency,
+    "Count as of Dec. 16" = current_count,
+    "Count as of Nov. 24" = previous_count,
+    "Change" = change,
+    "Percent Change" = pct_change 
+  )
+  
+
+datatable(agencycount_comparefiltered) 
+  
+
+```
