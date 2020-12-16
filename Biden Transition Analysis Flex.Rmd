@@ -1,0 +1,95 @@
+---
+title: "Biden Transition Analysis"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(scales)
+library(gt)
+library(kableExtra)
+library(glue)
+library(plotly)
+library(DT)
+library(htmlwidgets)
+library(htmltools)
+options(dplyr.summarise.inform = FALSE)
+
+#run the script for step 03 to update the datasets to caputre the current live verions
+#and load all the new dataset objects into the environment (you'll see them populate on the upper right window)
+source("03_compare_current_with_previous_BrittneyHo.R")
+```
+
+White House Staff
+==================================
+Here are the White House Senior Staff members that have been named to the Biden Administration. To sort, use the up/down arrows by the column names. 
+
+Row {data-width=1000}
+-----------------------------------------------------------------------
+
+### White House Staff (as of Dec. 16, 2020)
+
+```{r}
+
+staff_data_current_filtered <- staff_data_current %>%
+  select(
+    name, title, -link, -idstring
+  ) %>%
+  rename(
+    Name = name,
+    Title = title
+  )
+
+datatable(staff_data_current_filtered,
+          filter = "top",
+          extensions = "Buttons",
+          options = list(searchHighlight = TRUE, bPaginate = FALSE, dom = 'Bfrtip', 
+        buttons = c('copy', 'csv', 'excel', 'print')
+          )) 
+
+```
+
+Agency Appointees
+==================================
+Here are the agency appointees that have been named to the Biden Administration. To sort, use the up/down arrows by the column names. To filter, click on the boxes at the top of the columns. 
+
+Row {data-width=1000}
+-----------------------------------------------------------------------
+
+### Agency Appointees (as of Dec. 16, 2020)
+
+```{r}
+transition_data_current_filtered <- transition_data_current %>%
+  select(
+    agency, name, team_lead, on_multiple_teams, most_recent_employment, source_of_funding, -idstring, -namestring
+    ) %>%
+  mutate(
+    team_lead = as.factor(team_lead),
+    on_multiple_teams = as.factor(on_multiple_teams),
+    source_of_funding = as.factor(source_of_funding)
+  ) %>%
+  rename(
+    Agency = agency,
+    Name = name,
+    "Team Lead" = team_lead,
+    "On Multiple Teams" = on_multiple_teams,
+    "Most Recent Employment" = most_recent_employment,
+    "Source of Funding" = source_of_funding
+  ) 
+ 
+datatable(transition_data_current_filtered,
+          filter = "top",
+          extensions = "Buttons",
+          options = list(searchHighlight = TRUE, bPaginate = FALSE, dom = 'Bfrtip', 
+        buttons = c('copy', 'csv', 'excel', 'print')
+          )) 
+```
+
+
